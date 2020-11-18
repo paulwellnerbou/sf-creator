@@ -9,7 +9,8 @@ Current support:
 Planned support:
 
 * [DecentSampler](https://www.decentsamples.com/product/decent-sampler-plugin/)
-* [Soundfont 2 `sf2`](https://en.wikipedia.org/wiki/SoundFont) (This will be more tricky, as it is a binary format)
+* [Soundfont 2 `sf2`](https://en.wikipedia.org/wiki/SoundFont) (This will be more tricky, as it is a binary format,
+as [Polyphone](https://www.polyphone-soundfonts.com/) is able to convert `sfz` to `sf2`, I will postpone this)
 
 ## Project setup
 
@@ -76,6 +77,7 @@ An XML based format developed by David Hilowitz (see https://youtu.be/UxPRmD_RNC
 ### SF2 Support
 
 This will get tricky, as this is a binary format with not too much examples. There are a few applications reading or even writing sf2 out there, at least at a very basic level.
+But as [Polyphone](https://www.polyphone-soundfonts.com/) is able to convert `sfz` to `sf2`, I will postpone this.
 
 * Basic SFZ to SF2 converter in python: https://github.com/freepats/freepats-tools
 * C++ library [sf2cute](http://gocha.github.io/sf2cute/)
