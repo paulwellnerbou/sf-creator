@@ -57,8 +57,8 @@ class TestSoundFont(TestCase):
         sf = SoundFont(samples=[
             Sample("filename.wav", root_key=60)
         ])
-        self.assertEqual(sf.samples[0].range.high_key, 60)
-        self.assertEqual(sf.samples[0].range.low_key, 60)
+        self.assertEqual(sf.samples[0].key_range.high_key, 60)
+        self.assertEqual(sf.samples[0].key_range.low_key, 60)
 
 
 class TestNoteNameMidiNumberMapper(TestCase):

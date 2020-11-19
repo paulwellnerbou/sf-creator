@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Range:
+class KeyRange:
     def __init__(self, root_key: int = 60, low_key: int = None, high_key: int = None):
         self.root_key = root_key
         self.low_key = low_key
@@ -18,47 +18,65 @@ class Range:
         return self.low_key == other.low_key and self.root_key == other.root_key and self.high_key == other.high_key
 
 
+class VelocityRange:
+    def __init__(self, low_velocity: int = 0, high_velocity: int = 127):
+        self.low_velocity = low_velocity
+        self.high_velocity = high_velocity
+
+    def in_range(self, key):
+        return self.low_velocity <= key <= self.high_velocity
+
+    def __eq__(self, other):
+        return self.low_velocity == other.low_velocity and self.high_velocity == other.root_key and\
+               self.high_velocity == other.high_key
+
+
 class Sample:
     def __init__(self, filename: str, root_key: int = 60, low_key: int = None, high_key: int = None):
+        self.velocity_range = VelocityRange()
         self.filename = filename
-        self.range = Range(root_key, low_key, high_key)
+        self.key_range = KeyRange(root_key, low_key, high_key)
         self.index = 0
 
     def __repr__(self) -> str:
-        return 'Sample(filename=' + self.filename + ', root_key=' + str(self.range.root_key) + ', low_key=' + str(
-            self.range.low_key) + ', high_key=' + str(self.range.high_key) + ')'
+        return 'Sample(filename=' + self.filename + ', root_key=' + str(self.key_range.root_key) + ', low_key=' + str(
+            self.key_range.low_key) + ', high_key=' + str(self.key_range.high_key) + ')'
 
     def __eq__(self, other):
-        return self.filename == other.filename and self.range == other.range and self.index == other.index
+        return self.filename == other.filename and self.key_range == other.key_range and self.index == other.index
 
 
 class SoundFont:
-    def __init__(self, samples: List[Sample]):
+    def __init__(self, samples: List[Sample], loop_mode: str = "no_loop", polyphony: str = None, release: int = None,
+                 instrument_name=None):
+        self.instrument_name = instrument_name
         self.samples = samples
+        self.loop_mode = loop_mode
+        self.polyphony = polyphony
+        self.release = release
 
     def root_keys(self):
-        return sorted(set([sample.range.root_key for sample in self.samples]))
+        return sorted(set([sample.key_range.root_key for sample in self.samples]))
 
-    def range_for_key(self, key) -> Range:
-        samples_in_range = [sample for sample in self.samples if sample.range.in_range(key)]
-        return samples_in_range[0].range if len(samples_in_range) > 0 else None
+    def range_for_key(self, key) -> KeyRange:
+        samples_in_range = [sample for sample in self.samples if sample.key_range.in_range(key)]
+        return samples_in_range[0].key_range if len(samples_in_range) > 0 else None
 
     def samples_for_root_key(self, root_key):
-        return [sample for sample in self.samples if sample.range.root_key == root_key]
+        return [sample for sample in self.samples if sample.key_range.root_key == root_key]
 
     def set_range(self, root_key, low_key=None, high_key=None):
         for sample in self.samples_for_root_key(root_key):
             if low_key is not None:
-                sample.range.low_key = low_key
+                sample.key_range.low_key = low_key
             if high_key is not None:
-                sample.range.high_key = high_key
+                sample.key_range.high_key = high_key
 
 
 class HighLowKeyDistributor:
     def distribute(self, soundfont: SoundFont, low_key: int = 21, high_key: int = 108):
-        soundfont.samples.sort(key=lambda sample: sample.range.root_key, reverse=False)
+        soundfont.samples.sort(key=lambda sample: sample.key_range.root_key, reverse=False)
 
-        lo_key = 0
         prev_root_key: int = None
         for root_key in soundfont.root_keys():
             range = soundfont.range_for_key(root_key)
