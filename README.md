@@ -5,10 +5,10 @@ This library aims to create a soundfont based on a directory containing sound fi
 Current support:
 
 * [SFZ Format](https://sfzformat.com/)
+* [DecentSampler](https://www.decentsamples.com/product/decent-sampler-plugin/)
 
 Planned support:
 
-* [DecentSampler](https://www.decentsamples.com/product/decent-sampler-plugin/)
 * [Soundfont 2 `sf2`](https://en.wikipedia.org/wiki/SoundFont) (This will be more tricky, as it is a binary format,
 as [Polyphone](https://www.polyphone-soundfonts.com/) is able to convert `sfz` to `sf2`, I will postpone this)
 
@@ -70,9 +70,10 @@ The best starting point for SFZ is https://sfzformat.com/.
 
 An XML based format developed by David Hilowitz (see https://youtu.be/UxPRmD_RNCY).
 
-- [ ] Create an XML Schema for highlighting and autocompletion
-- [ ] Implement `DecentSamplerWriter`
-- [ ] Add options for UI (cover), and effects
+- [x] Create an XML Schema for highlighting and autocompletion
+- [x] Implement `DecentSamplerWriter`
+- [x] Add options for UI (cover)
+- [ ] ...and effects
 
 ### SF2 Support
 
