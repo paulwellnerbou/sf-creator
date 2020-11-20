@@ -43,6 +43,9 @@ This will create a file `soundfont.sfz` alongside the `wav` files in the given d
 python main.py sfz <directory-to-wave-files>
 ```
 
+Run `python main.py --help` or `python main.py <command> --help`, where `<command>` can be `sfz` or `decentsampler` for now,
+to get the full list of arguments.
+
 ## Automatic note detection and mapping of samples
 
 The given samples are scanned for note names (A0 to C8). If a note name is found in a filename of a sample, the midi
