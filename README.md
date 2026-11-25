@@ -1,3 +1,13 @@
+## Experimental single-WAV SF2 export
+
+A basic standalone converter script is available on the feature branch. It creates a minimal SF2 preset from a single uncompressed mono 8-bit or 16-bit PCM WAV and maps it across the keyboard. It is experimental and should be validated in an SF2 player before use.
+
+```bash
+python sf2_from_wav.py sample.wav output.sf2 --name "My Instrument"
+```
+
+This is not yet integrated into the existing `main.py` CLI and does not support multisample banks, velocity layers, stereo WAVs, or loop editing.
+
 # Soundfont creation
 
 This library aims to create a soundfont based on a directory containing sound files (`.wav`).
