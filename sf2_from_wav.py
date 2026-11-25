@@ -39,11 +39,11 @@ def make_sf2(wav_path, out_path, preset_name):
     pgen = struct.pack("<HH",41,0) # instrument index 0
 
     inst = fixed_name(preset_name)+struct.pack("<H",0)+fixed_name("EOI")+struct.pack("<H",1)
-    ibag = struct.pack("<HH",0,0)+struct.pack("<HH",2,0)
+    ibag = struct.pack("<HH",0,0)+struct.pack("<HH",3,0)
     imod = b"\0"*10
     # instrument zone generators: key range 0-127, sampleID, root key override
-    igen = struct.pack("<HH",43,struct.pack("<BB",0,127))+struct.pack("<HH",53,0)+struct.pack("<HH",58,60)
-    shdr = fixed_name("Sample")+struct.pack("<IIIIIBbHH",0,sample_count,sample_count,0,0,rate,60,0,0,1)+fixed_name("EOS")+struct.pack("<IIIIIBbHH",sample_count,sample_count,sample_count,sample_count,rate,60,0,0,0)
+    igen = struct.pack("<HH",43,0x7f00)+struct.pack("<HH",53,0)+struct.pack("<HH",58,60)
+    shdr = fixed_name("Sample")+struct.pack("<IIIIIBbHH",0,sample_count,0,0,rate,60,0,0,1)+fixed_name("EOS")+struct.pack("<IIIIIBbHH",sample_count,sample_count,sample_count,sample_count,rate,60,0,0,0)
     pdta = b"pdta"+ck(b"phdr",phdr)+ck(b"pbag",pbag)+ck(b"pmod",pmod)+ck(b"pgen",pgen)+ck(b"inst",inst)+ck(b"ibag",ibag)+ck(b"imod",imod)+ck(b"igen",igen)+ck(b"shdr",shdr)
     body = b"sfbk"+listck(info)+listck(sdta)+listck(pdta)
     with open(out_path,"wb") as f: f.write(ck(b"RIFF",body))
